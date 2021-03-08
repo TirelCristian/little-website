@@ -1,0 +1,21 @@
+version: '3'
+services:
+  website:
+    container_name: jenkins
+    image: jenkins
+    volumes:
+      - /home/ec2-user/jenkins_home/:/var/jenkins_home/
+      - /root/docker.sock:/root/docker.sock
+    ports:
+      - "8080:8080"
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 500M
+    group_add:
+      - 972
+    networks:
+      - net
+networks:
+  net:

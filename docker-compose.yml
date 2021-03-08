@@ -1,0 +1,24 @@
+version: '3'
+services: 
+  website:
+    container_name: web
+    restart: unless-stopped
+    image: nginx_certbot
+    build:
+      context: nginx_certbot  
+    ports:
+      - '80:80/tcp'
+      - '443:443/tcp'
+    volumes:
+      - ./letsencrypt:/etc/letsencrypt
+      - ./site:/site
+      - ./conf.d:/etc/nginx/conf.d
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 500M
+    networks:
+      - net
+networks:
+  net:
